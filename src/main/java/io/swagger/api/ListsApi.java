@@ -5,23 +5,24 @@
  */
 package io.swagger.api;
 
-import io.swagger.model.Body;
-import io.swagger.model.TodoList;
-import io.swagger.annotations.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.model.Body;
+import io.swagger.model.TodoItem;
+import io.swagger.model.TodoList;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-29T19:37:26.578Z")
 
 @Api(value = "lists", description = "the lists API")
@@ -58,12 +59,12 @@ public interface ListsApi {
     ResponseEntity<List<TodoList>> getAllTodoLists();
 
 
-    @ApiOperation(value = "Returns specified TodoList", nickname = "getTodoList", notes = "", response = TodoList.class, tags={ "todo-list", })
+    @ApiOperation(value = "Returns items for a specified TodoList", nickname = "getTodoListItems", notes = "", response = TodoList.class, tags={ "todo-list", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = TodoList.class) })
     @RequestMapping(value = "/lists/{listId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<TodoList> getTodoList(@ApiParam(value = "TodoList id to get",required=true) @PathVariable("listId") String listId);
+    ResponseEntity<List<TodoItem>> getTodoListItems(@ApiParam(value = "TodoList id to get items for",required=true) @PathVariable("listId") String listId);
 
 }

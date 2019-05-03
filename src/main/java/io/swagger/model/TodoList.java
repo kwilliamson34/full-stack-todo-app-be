@@ -1,36 +1,37 @@
 package io.swagger.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.model.TodoItem;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.validation.annotation.Validated;
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * TodoList
  */
+@Entity
+@Table(name="todo_list")
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-04-29T19:37:26.578Z")
 
 public class TodoList   {
+	@Id
   @JsonProperty("id")
-  private String id = null;
+  private String id = "todo-list-" + UUID.randomUUID().toString();
 
   @JsonProperty("title")
   private String title = null;
 
-  @JsonProperty("items")
-  @Valid
-  private List<TodoItem> items = null;
-
-  public TodoList id(String id) {
-    this.id = id;
+  public TodoList id() {
     return this;
   }
 
@@ -70,19 +71,6 @@ public class TodoList   {
     this.title = title;
   }
 
-  public TodoList items(List<TodoItem> items) {
-    this.items = items;
-    return this;
-  }
-
-  public TodoList addItemsItem(TodoItem itemsItem) {
-    if (this.items == null) {
-      this.items = new ArrayList<TodoItem>();
-    }
-    this.items.add(itemsItem);
-    return this;
-  }
-
   /**
    * Get items
    * @return items
@@ -90,14 +78,6 @@ public class TodoList   {
   @ApiModelProperty(value = "")
 
   @Valid
-
-  public List<TodoItem> getItems() {
-    return items;
-  }
-
-  public void setItems(List<TodoItem> items) {
-    this.items = items;
-  }
 
 
   @Override
@@ -109,14 +89,12 @@ public class TodoList   {
       return false;
     }
     TodoList todoList = (TodoList) o;
-    return Objects.equals(this.id, todoList.id) &&
-        Objects.equals(this.title, todoList.title) &&
-        Objects.equals(this.items, todoList.items);
+    return Objects.equals(this.id, todoList.id) && Objects.equals(this.title, todoList.title);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, items);
+    return Objects.hash(id, title);
   }
 
   @Override
@@ -126,7 +104,6 @@ public class TodoList   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("}");
     return sb.toString();
   }
