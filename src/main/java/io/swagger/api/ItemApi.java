@@ -26,7 +26,7 @@ import java.util.List;
 @Api(value = "item", description = "the item API")
 public interface ItemApi {
 
-    @ApiOperation(value = "Add a new TodoItem to a list", nickname = "addTodoItem", notes = "", tags={ "todo-item", })
+    @ApiOperation(value = "Add a new TodoItem to a list, or update a TodoItem in a list", nickname = "addTodoItem", notes = "", tags={ "todo-item", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successful operation"),
         @ApiResponse(code = 405, message = "Invalid input") })
@@ -34,7 +34,10 @@ public interface ItemApi {
         produces = { "application/xml", "application/json" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> addTodoItem(@ApiParam(value = "TodoItem object to be added to the store" ,required=true )  @Valid @RequestBody TodoItem body);
+    ResponseEntity<Void> addTodoItem(
+    		@ApiParam(value = "TodoItem object to be added to the store" ,required=true)
+    		@Valid
+    		@RequestBody TodoItem body);
 
 
     @ApiOperation(value = "Deletes a TodoItem", nickname = "deleteItem", notes = "", tags={ "todo-item", })
@@ -45,19 +48,9 @@ public interface ItemApi {
     @RequestMapping(value = "/item/{itemId}",
         produces = { "application/xml", "application/json" }, 
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteItem(@ApiParam(value = "TodoItem id to delete",required=true) @PathVariable("itemId") String itemId);
-
-
-    @ApiOperation(value = "Update an existing TodoItem", nickname = "updateTodoItem", notes = "", tags={ "todo-item", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Successful operation"),
-        @ApiResponse(code = 400, message = "Invalid ID supplied"),
-        @ApiResponse(code = 404, message = "TodoItem not found"),
-        @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/item",
-        produces = { "application/xml", "application/json" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.PUT)
-    ResponseEntity<Void> updateTodoItem(@ApiParam(value = "TodoItem object that needs to be updated in the store" ,required=true )  @Valid @RequestBody TodoItem body);
+    ResponseEntity<Void> deleteItem(
+    		@ApiParam(value = "TodoItem id to delete",required=true)
+    		@PathVariable("itemId") String itemId
+		);
 
 }

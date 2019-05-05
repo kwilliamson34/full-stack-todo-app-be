@@ -45,15 +45,7 @@ public class ItemApiController implements ItemApi {
 
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Void> deleteItem(@ApiParam(value = "TodoItem id to delete",required=true) @PathVariable("itemId") String itemId) {
-    	repository.deleteById(itemId);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Void> updateTodoItem(@ApiParam(value = "TodoItem object that needs to be updated in the store" ,required=true )  @Valid @RequestBody TodoItem body) {
-    	TodoItem toEdit = repository.findById(body.getId());
-    	toEdit.setTitle(body.getTitle());
-    	toEdit.setDone(body.isDone());
+    	repository.delete(itemId);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
