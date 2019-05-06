@@ -6,6 +6,7 @@
 package io.swagger.api;
 
 import io.swagger.model.TodoItem;
+import io.swagger.model.TodoList;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -52,5 +53,14 @@ public interface ItemApi {
     		@ApiParam(value = "TodoItem id to delete",required=true)
     		@PathVariable("itemId") String itemId
 		);
+    
+    
+    @ApiOperation(value = "Returns all TodoItems", nickname = "getAllTodoItems", notes = "", response = TodoItem.class, responseContainer = "Item", tags={ "todo-item", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = TodoItem.class, responseContainer = "Item") })
+    @RequestMapping(value = "/items",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<List<TodoItem>> getAllTodoItems();
 
 }
